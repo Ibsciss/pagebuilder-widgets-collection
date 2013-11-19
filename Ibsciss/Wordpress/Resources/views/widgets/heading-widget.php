@@ -1,0 +1,1 @@
+<?php echo '<h'.$heading_level.' class="pbwc-'.$text_align.'">'.$title.'</h'.$heading_level.'>'; ?>

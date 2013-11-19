@@ -1,0 +1,11 @@
+h1.pbwc-center, h2.pbwc-center, h3.pbwc-center, h4.pbwc-center, h5.pbwc-center, h6.pbwc-center, h7.pbwc-center, h8.pbwc-center, h9.pbwc-center, h10.pbwc-center{
+    text-align: center;
+}
+
+h1.pbwc-right, h2.pbwc-right, h3.pbwc-right, h4.pbwc-right, h5.pbwc-right, h6.pbwc-right, h7.pbwc-right, h8.pbwc-right, h9.pbwc-right, h10.pbwc-right{
+    text-align: right;
+}
+
+h1.pbwc-left, h2.pbwc-left, h3.pbwc-left, h4.pbwc-left, h5.pbwc-left, h6.pbwc-left, h7.pbwc-left, h8.pbwc-left, h9.pbwc-left, h10.pbwc-left{
+    text-align: left;
+}
