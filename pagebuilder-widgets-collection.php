@@ -31,4 +31,5 @@ ibsciss_register_files('Widgets/Widget');
  * register widgets
  */
 \Ibsciss\Wordpress\Widgets\Widget::register('Heading');
+\Ibsciss\Wordpress\Widgets\Widget::register('Separator');
 \Ibsciss\Wordpress\Widgets\Widget::init();

@@ -33,11 +33,14 @@ abstract class Widget extends \WP_widget{
      * @param string $widget_id
      * @param string $widget_name
      */
-    public function __construct ($widget_id = '', $widget_name = '')
+    public function __construct ($widget_name = '', $widget_description = array())
     {
-        $widget_id = (!empty($widget_id)) ? $widget_id : self::getClassName().'-ibsciss-widget';
-        $widget_name = (!empty($widget_name)) ? $widget_name : '(PB Collection) '.self::getClassName(true).' Widget';
-        parent::__construct($widget_id, $widget_name);
+        $widget_id = self::getClassName().'-ibsciss-widget';
+        $widget_name = (!empty($widget_name)) ?$widget_name.' (PB Collection)' : self::getClassName(true).' (PB Collection)';
+        $options = (!empty($widget_description)) ? array('description' => $widget_description) : array();
+
+        parent::__construct($widget_id, $widget_name, $options);
+
         Template::init();
     }
     /**

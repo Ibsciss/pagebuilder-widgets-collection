@@ -9,3 +9,7 @@ h1.pbwc-right, h2.pbwc-right, h3.pbwc-right, h4.pbwc-right, h5.pbwc-right, h6.pb
 h1.pbwc-left, h2.pbwc-left, h3.pbwc-left, h4.pbwc-left, h5.pbwc-left, h6.pbwc-left, h7.pbwc-left, h8.pbwc-left, h9.pbwc-left, h10.pbwc-left{
     text-align: left;
 }
+
+hr.pbwc-center{
+    margin: 0 auto;
+}
