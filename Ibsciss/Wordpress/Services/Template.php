@@ -22,7 +22,7 @@ class Template {
 
         //load template
         extract($templatesVars);
-        require_once $templatePath;
+        require $templatePath;
     }
 
     public static function register_js($jsFileName, $context = 'front')
