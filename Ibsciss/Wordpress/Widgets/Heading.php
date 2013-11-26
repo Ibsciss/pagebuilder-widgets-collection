@@ -18,13 +18,11 @@ class Heading extends Widget {
     }
 
     public function update($new_instance, $old_instance ) {
-
-        $instance = array();
+        $instance = $old_instance;
 
         $instance['heading_level'] = (int)$new_instance['heading_level'];
         $instance['text_align'] = (array_key_exists('text_align',$new_instance)) ? Validate::textalign($new_instance['text_align']) : 'left';
         $instance['title'] = strip_tags($new_instance['title']);
-
         return $instance;
     }
 
