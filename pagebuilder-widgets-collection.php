@@ -25,6 +25,8 @@ function ibsciss_register_service($serviceName){ ibsciss_register_files('Service
  */
 ibsciss_register_service('Template');
 ibsciss_register_service('Validate');
+ibsciss_register_service('Input');
+ibsciss_register_service('WidgetInput');
 ibsciss_register_files('Widgets/Widget');
 
 /*

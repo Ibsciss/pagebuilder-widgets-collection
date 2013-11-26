@@ -1,5 +1,6 @@
 <?php
 namespace Ibsciss\Wordpress\Services;
+use Ibsciss\Wordpress\Services\Input as Input;
 
 class Template {
 
@@ -16,13 +17,20 @@ class Template {
      * @param $templateName string
      * @param $templatesVars array
      */
-    public static function render($templateName, $templatesVars)
+    public static function render($templateName, $templatesVars, $returnString = false)
     {
         $templatePath = self::computePath($templateName);
 
+        extract($templatesVars, EXTR_OVERWRITE);
+
+        if($returnString)
+            ob_start();
+
         //load template
-        extract($templatesVars);
         require $templatePath;
+
+        if($returnString)
+            return ob_get_clean();
     }
 
     public static function register_js($jsFileName, $context = 'front')

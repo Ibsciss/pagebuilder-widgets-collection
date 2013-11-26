@@ -3,6 +3,7 @@ namespace Ibsciss\Wordpress\Widgets;
 
 
 use Ibsciss\Wordpress\Services\Template;
+use Ibsciss\Wordpress\Services\WidgetInput;
 
 abstract class Widget extends \WP_widget{
 
@@ -105,8 +106,9 @@ abstract class Widget extends \WP_widget{
      */
     public function form($instance)
     {
-        $instance['widget'] = $this;
-        self::render(self::getClassName().'-form', $instance);
+        self::render(self::getClassName().'-form', array_merge($instance, array(
+            'input' => new WidgetInput($this, $instance)
+        )));
     }
 
     /**
@@ -134,8 +136,10 @@ abstract class Widget extends \WP_widget{
         $classFullName = get_called_class();
 
         //remove namespaces
-        if(!isset(self::$widgetsNameCache[$classFullName]))
-            self::$widgetsNameCache[$classFullName] = end(explode('\\',$classFullName));
+        if(!isset(self::$widgetsNameCache[$classFullName])){
+            $arrayClassName = explode('\\',$classFullName);
+            self::$widgetsNameCache[$classFullName] = end($arrayClassName);
+        }
 
         if($ucfirst)
             return ucfirst(self::$widgetsNameCache[$classFullName]);
