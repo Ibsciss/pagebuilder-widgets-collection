@@ -11,7 +11,7 @@ class Input {
      */
     public function Text($label, $attr = array())
     {
-        $attr = self::prepareAttr(array_merge($attr, array('label' => $label)));
+        $attr = $this->prepareAttr(array_merge($attr, array('label' => $label)));
 
         self::display('text', array(
             'label' => $label,
@@ -21,9 +21,9 @@ class Input {
         ));
     }
     
-    public function Select($label, $options, $attr)
+    public function Select($label, $options, $attr = array())
     {
-        $attr = self::prepareAttr(array_merge($attr, array('label' => $label)));
+        $attr = $this->prepareAttr(array_merge($attr, array('label' => $label)));
         
         self::display('select', array(
             'label' => $label,
@@ -42,22 +42,49 @@ class Input {
             ));
     }
     
+    public function collection($collectionName)
+    {
+        return new InputCollection($instance, $value);
+    }
+    
     /**
      * Extract and complet $attr array
      * @param array[] $attr
      * @return array[]
      */
-    public static function prepareAttr($attr)
+    public function prepareAttr($attr)
     {
-        $attr['name'] = (isset($attr['name']) && !empty($attr['name'])) ? $attr['name'] : self::sanitize_label($attr['label']);
-        $attr['id'] = (isset($attr['id']) && !empty($attr['id'])) ? $attr['id'] : $attr['name'];
-        
-        //if empty value change value by default value
-        if(!isset($attr['value']) || empty($attr['value']))
-            if(isset($attr['default_value']) && !empty($attr['default_value']))
-                $attr['value'] = $attr['default_value'];
+        //@warning : invoke order is important : original_name MUST BE the first called method.
+        $attr['original_name'] = $this->getOriginalName($attr);
+        $attr['name'] = $this->getNameAttribute($attr);
+        $attr['id'] = $this->getIdAttribute($attr);
+        $attr['value'] = $this->getValueAttribute($attr);
                     
         return $attr;
+    }
+    
+    public function getOriginalName($attr)
+    {
+        return $this->getNameAttribute($attr);
+    }
+    
+    public function getNameAttribute($attr)
+    {
+        return (isset($attr['name']) && !empty($attr['name'])) ? $attr['name'] : self::sanitize_label($attr['label']);
+    }
+    
+    public function getIdAttribute($attr)
+    {
+        return (isset($attr['id']) && !empty($attr['id'])) ? $attr['id'] : $attr['name'];
+    }
+    
+    public function getValueAttribute($attr)
+    {
+        if(!isset($attr['value']) || empty($attr['value']))
+            if(isset($attr['default_value']) && !empty($attr['default_value']))
+                return $attr['default_value'];
+            
+        return '';
     }
     
     /**

@@ -12,10 +12,13 @@ class WidgetInput extends Input
     
     protected $value = array();
        
-    public function __construct($instance, $value)
+    public function __construct($instance = null, $value = array())
     {
-        $this->setInstance($instance);
-        $this->setValue($value);
+        if(!is_null($instance))
+            $this->setInstance($instance);
+        
+        if(!empty($value))
+            $this->setValue($value);
     }
     
     public function setValue($value)
@@ -27,32 +30,26 @@ class WidgetInput extends Input
     {
         $this->instance = $instance;
     }
-    
-    /**
-     * @inherit
-     */
-    public function Text($label, $attr = array()) 
-    {        
-        $attr['name'] = (isset($attr['name'])) ? $attr['name'] : self::sanitize_label($label);
-        parent::Text($label, $this->prepareAttrForWidget($attr));
-    }
-    
-    /**
-     * @inherit
-     */
-    public function Select($label, $options, $attr = array())
+
+    public function getNameAttribute($attr)
     {
-        $attr['name'] = (isset($attr['name'])) ? $attr['name'] : self::sanitize_label($label);
-        parent::Select($label, $options, $this->prepareAttrForWidget($attr));
+        //check if an instance has been defined
+        if(is_null($this->instance))
+            throw new Exception ('A widget instance MUST BE set (in constructor or method "setInstance") before calling other functions');
+        
+        return $this->instance->get_field_name(parent::getNameAttribute($attr));
     }
     
-    public function prepareAttrForWidget($attr) {
-        //value must be below name because of supercharging.
-        $attr['value'] = (isset($this->value[$attr['name']])) ? $this->value[$attr['name']] : '';
-        $attr['id'] = $this->instance->get_field_id($attr['name']);
-        $attr['name'] = $this->instance->get_field_name($attr['name']);
-        return $attr;
+    public function getIdAttribute($attr) 
+    {
+        return $this->instance->get_field_id(parent::getIdAttribute($attr));
     }
+    
+    public function getValueAttribute($attr) {
+        $attr['value'] = (isset($this->value[$attr['original_name']])) ? $this->value[$attr['original_name']] : '';
+        return parent::getValueAttribute($attr);
+    }
+    
         
 }
 
