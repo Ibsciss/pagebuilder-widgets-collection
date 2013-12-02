@@ -16,7 +16,7 @@ class WidgetInput extends Input
     {
         if(!is_null($instance))
             $this->setInstance($instance);
-        
+
         if(!empty($value))
             $this->setValue($value);
     }
@@ -45,11 +45,27 @@ class WidgetInput extends Input
         return $this->instance->get_field_id(parent::getIdAttribute($attr));
     }
     
-    public function getValueAttribute($attr) {
-        $attr['value'] = (isset($this->value[$attr['original_name']])) ? $this->value[$attr['original_name']] : '';
+    public function getValueAttribute($attr) 
+    {
+        if(isset($this->value[$attr['original_name']]))
+            return $this->value[$attr['original_name']];
+        
         return parent::getValueAttribute($attr);
     }
     
+    public function collection($collectionName) 
+    {
+        $value = $this->getValueAttribute(array('original_name' => mb_strtolower($collectionName)));
+        $value = (is_array($value)) ? $value : array();
+        return new WidgetInputCollection($collectionName, $this->instance, $value);
+    }
+    
+    public function largeCollection($collectionName)
+    {
+        $collection = $this->collection($collectionName);
+        $collection->setLargeCollection();
+        return $collection;
+    }
         
 }
 

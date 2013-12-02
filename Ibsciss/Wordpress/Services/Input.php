@@ -17,7 +17,8 @@ class Input {
             'label' => $label,
             'id' => $attr['id'],
             'value' => $attr['value'],
-            'name' => $attr['name']
+            'name' => $attr['name'],
+            'attr' => $attr
         ));
     }
     
@@ -30,7 +31,8 @@ class Input {
             'options' => $options,
             'id' => $attr['id'],
             'value' => $attr['value'],
-            'name' => $attr['name']
+            'name' => $attr['name'],
+            'attr' => $attr
         ));
     }
 
@@ -44,7 +46,7 @@ class Input {
     
     public function collection($collectionName)
     {
-        return new InputCollection($instance, $value);
+        return new InputCollection($collectionName);
     }
     
     /**
@@ -59,13 +61,12 @@ class Input {
         $attr['name'] = $this->getNameAttribute($attr);
         $attr['id'] = $this->getIdAttribute($attr);
         $attr['value'] = $this->getValueAttribute($attr);
-                    
         return $attr;
     }
     
-    public function getOriginalName($attr)
+    public final function getOriginalName($attr)
     {
-        return $this->getNameAttribute($attr);
+        return (isset($attr['name']) && !empty($attr['name'])) ? $attr['name'] : self::sanitize_label($attr['label']);
     }
     
     public function getNameAttribute($attr)
