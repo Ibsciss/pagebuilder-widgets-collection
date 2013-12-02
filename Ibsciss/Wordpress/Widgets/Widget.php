@@ -34,7 +34,7 @@ abstract class Widget extends \WP_widget{
      * @param string $widget_id
      * @param string $widget_name
      */
-    public function __construct ($widget_name = '', $widget_description = array())
+    public function __construct ($widget_name = '', $widget_description = '')
     {
         $widget_id = self::getClassName().'-ibsciss-widget';
         $widget_name = (!empty($widget_name)) ?$widget_name.' (PB Collection)' : self::getClassName(true).' (PB Collection)';
@@ -89,7 +89,7 @@ abstract class Widget extends \WP_widget{
      * @return array Updated safe values to be saved.
      */
     public function update($new_instance, $old_instance){
-        throw new \Exception('the update method MUST BE override by child class');
+        return self::recursiveRemoveEmptyArray($new_instance);
     }
 
     public function render($tplName, $args)
@@ -106,6 +106,9 @@ abstract class Widget extends \WP_widget{
      */
     public function form($instance)
     {
+        //protection againt barbaric developper :) (like me) -- if null is saved in DB => the system is broken
+        $instance = is_array ($instance) ? $instance : array();
+                
         self::render(self::getClassName().'-form', array_merge($instance, array(
             'input' => new WidgetInput($this, $instance)
         )));
@@ -145,6 +148,30 @@ abstract class Widget extends \WP_widget{
             return ucfirst(self::$widgetsNameCache[$classFullName]);
 
         return mb_strtolower(self::$widgetsNameCache[$classFullName]);
+    }
+    
+    protected static function recursiveRemoveEmptyArray($array)
+    {
+        if(empty($array)) return array();
+        
+        $return = array();
+        $intKey = true;
+        foreach($array as $key => $item){
+            if(!is_int($key)) $intKey = false;
+
+            //curent item is empty
+            if(empty($item)) continue;
+            
+            //recursive call
+            $childrenValues = (is_array($item)) ? self::recursiveRemoveEmptyArray($item) : $item;
+            
+            //if empty children continue :
+            if(empty($childrenValues)) continue;
+                            
+            $return[$key] = $childrenValues;
+        }
+        if($intKey)$return = array_values($return);
+        return $return;
     }
 
 } 

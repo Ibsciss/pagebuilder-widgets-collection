@@ -16,7 +16,7 @@ class WidgetInput extends Input
     {
         if(!is_null($instance))
             $this->setInstance($instance);
-        
+
         if(!empty($value))
             $this->setValue($value);
     }
@@ -45,11 +45,13 @@ class WidgetInput extends Input
         return $this->instance->get_field_id(parent::getIdAttribute($attr));
     }
     
-    public function getValueAttribute($attr) {
-        $attr['value'] = (isset($this->value[$attr['original_name']])) ? $this->value[$attr['original_name']] : '';
+    public function getValueAttribute($attr) 
+    {
+        if(isset($this->value[$attr['original_name']]))
+            return $this->value[$attr['original_name']];
+        
         return parent::getValueAttribute($attr);
     }
-    
         
 }
 

@@ -19,14 +19,12 @@ if(!defined('IBSCISS_PLUGIN_RESOURCES_URL_PBWC')) define('IBSCISS_PLUGIN_RESOURC
 
 function ibsciss_register_files($fileName){ require_once IBSCISS_PLUGIN_PATH_PBWC.'Ibsciss/Wordpress/'.$fileName.'.php'; }
 function ibsciss_register_service($serviceName){ ibsciss_register_files('Services/'.$serviceName); }
+function ibsciss_autoload_service(){ ibsciss_register_service('autoload'); }
 
 /*
  * include necessary files
  */
-ibsciss_register_service('Template');
-ibsciss_register_service('Validate');
-ibsciss_register_service('Input');
-ibsciss_register_service('WidgetInput');
+ibsciss_autoload_service();
 ibsciss_register_files('Widgets/Widget');
 
 /*
@@ -34,4 +32,5 @@ ibsciss_register_files('Widgets/Widget');
  */
 \Ibsciss\Wordpress\Widgets\Widget::register('Heading');
 \Ibsciss\Wordpress\Widgets\Widget::register('Separator');
+\Ibsciss\Wordpress\Widgets\Widget::register('PriceTable');
 \Ibsciss\Wordpress\Widgets\Widget::init();
