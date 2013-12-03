@@ -22,11 +22,39 @@ class Input {
         ));
     }
     
+    public function checkbox($label, $attr = array())
+    {
+        $attr = $this->prepareAttr(array_merge($attr, array('label' => $label)));
+        
+        self::display('checkbox', array(
+            'label' => $label,
+            'id' => $attr['id'],
+            'value' => $attr['value'],
+            'name' => $attr['name'],
+            'attr' => $attr
+        ));
+    }
+    
     public function Select($label, $options, $attr = array())
     {
         $attr = $this->prepareAttr(array_merge($attr, array('label' => $label)));
         
         self::display('select', array(
+            'label' => $label,
+            'options' => $options,
+            'id' => $attr['id'],
+            'value' => $attr['value'],
+            'name' => $attr['name'],
+            'attr' => $attr
+        ));
+    }
+    
+    public function Choice($label, $options, $attr = array())
+    {
+        throw new Exception('PageBuilder doesn\'t support radio buttons');
+        $attr = $this->prepareAttr(array_merge($attr, array('label' => $label)));
+        
+        self::display('choice', array(
             'label' => $label,
             'options' => $options,
             'id' => $attr['id'],

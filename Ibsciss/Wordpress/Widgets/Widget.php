@@ -41,8 +41,6 @@ abstract class Widget extends \WP_widget{
         $options = (!empty($widget_description)) ? array('description' => $widget_description) : array();
 
         parent::__construct($widget_id, $widget_name, $options);
-
-        Template::init();
     }
     /**
      * Init all widgets defined is the widgetsCollection attribute
@@ -54,6 +52,7 @@ abstract class Widget extends \WP_widget{
                 register_widget('Ibsciss\\Wordpress\\Widgets\\'.$widget);
             });
         }
+        Template::init();
     }
 
     /**
@@ -89,7 +88,7 @@ abstract class Widget extends \WP_widget{
      * @return array Updated safe values to be saved.
      */
     public function update($new_instance, $old_instance){
-        return self::recursiveRemoveEmptyArray($new_instance);
+        return $new_instance;
     }
 
     public function render($tplName, $args)
