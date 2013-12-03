@@ -103,7 +103,7 @@ class Template {
         //Register admin style and Javascript
         add_action( 'admin_print_styles', function() use ($publicPath) {
             foreach(self::$cssRegister['admin'] as $cssName => $cssFile)
-                wp_enqueue_style( $cssName.'-admin-styles', $publicPath.'/css/'.$cssName);
+                wp_enqueue_style( $cssName.'-admin-styles', $publicPath.'/css/'.$cssFile);
         });
 
         add_action( 'admin_enqueue_scripts', function() use ($publicPath){
@@ -114,7 +114,7 @@ class Template {
         // Register site styles and scripts
         add_action( 'wp_enqueue_scripts', function() use ($publicPath){
             foreach(self::$cssRegister['front'] as $cssName => $cssFile){
-                wp_enqueue_style( $cssName.'-widget-styles', $publicPath.'/css/'.$cssName);
+                wp_enqueue_style( $cssName.'-widget-styles', $publicPath.'/css/'.$cssFile);
             }
             foreach(self::$jsRegister['front'] as $jsName => $jsFile)
                 wp_enqueue_script( $jsName.'-widget-styles', $publicPath.'/js/'.$jsFile, array('jquery'));
