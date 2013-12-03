@@ -32,5 +32,4 @@ ibsciss_register_files('Widgets/Widget');
  */
 \Ibsciss\Wordpress\Widgets\Widget::register('Heading');
 \Ibsciss\Wordpress\Widgets\Widget::register('Separator');
-\Ibsciss\Wordpress\Widgets\Widget::register('PriceTable');
 \Ibsciss\Wordpress\Widgets\Widget::init();
