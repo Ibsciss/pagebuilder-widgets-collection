@@ -21,4 +21,10 @@ class Validate {
         $correct_value = array('center', 'right', 'left');
         return (in_array($textalign, $correct_value)) ? $textalign : $default;
     }
+    
+    public static function AboveOrUnder($aboveOrUnder, $default = 'under')
+    {
+        $correct_value = array('above','under');
+        return (in_array($aboveOrUnder, $correct_value)) ? $aboveOrUnder : $default;
+    }
 } 

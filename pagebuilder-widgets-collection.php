@@ -33,4 +33,5 @@ ibsciss_register_files('Widgets/Widget');
 \Ibsciss\Wordpress\Widgets\Widget::register('Heading');
 \Ibsciss\Wordpress\Widgets\Widget::register('Separator');
 \Ibsciss\Wordpress\Widgets\Widget::register('SimpleCallToAction');
+\Ibsciss\Wordpress\Widgets\Widget::register('Image');
 \Ibsciss\Wordpress\Widgets\Widget::init();
