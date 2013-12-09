@@ -21,7 +21,7 @@ if(isset($legend) && !empty($legend)){
 <?php if($linked) echo '<a href="'.$link.'">';
 if(!$under) echo $legend_txt; ?>
 
-<img src="<?php echo $image_url; ?>" alt="<?php echo $alternative_text; ?>" />
+<img class="pbwc-no-margin" src="<?php echo $image_url; ?>" alt="<?php echo $alternative_text; ?>" />
 
 <?php if($under) echo $legend_txt;
 if($linked) echo '</a>'; ?>
